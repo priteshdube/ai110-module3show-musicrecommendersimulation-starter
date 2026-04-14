@@ -257,4 +257,5 @@ A few sentences about what you learned:
 - How did building this change how you think about real music recommenders
 - Where do you think human judgment still matters, even if the model seems "smart"
 
-![alt text](image.png)
+<img width="955" height="626" alt="image" src="https://github.com/user-attachments/assets/08525197-7a2f-4010-8dab-8ed6d5f64d4d" />
+
