@@ -29,6 +29,54 @@ Some prompts to answer:
 
 You can include a simple diagram or bullet list if helpful.
 
+
+Song features:
+
+Categorical: genre, mood — describe character in human terms
+Numerical: energy, valence, danceability, acousticness, tempo_bpm — capture how a song feels (all scaled 0–1)
+
+
+UserProfile stores:
+
+favorite_genre, favorite_mood — categorical taste anchors
+target_energy — the energy level the user gravitates toward
+likes_acoustic — acoustic vs electronic preference
+
+How a song is scored:
+
+Uses a Gaussian proximity function — score peaks when a song's value is close to user's preference, drops off as distance grows
+Each numerical feature contributes a weighted score (e.g. energy matters more than acousticness)
+Categorical mismatches (wrong genre/mood) act as a score penalty
+
+
+How songs are ranked:
+
+Score every song in the catalog
+Sort by score descending
+Return top k results
+
+
+-------------------------------------
+
+Algorithmic Recipe
+
+1. Load — Read all songs from songs.csv into a list of dicts. Cast numerical fields to float.
+
+2. Score — For each song, run score_song(user_prefs, song):
+
++2.0 if genre matches favorite_genre
++1.5 if mood matches favorite_mood
+0–4.0 from Gaussian proximity on energy (σ=0.20, target=0.40)
+0–2.0 from Gaussian proximity on acousticness (σ=0.25, target=0.75)
+Max possible score ≈ 9.5
+
+3. Rank — Collect (song, score, reasons) for all songs. Sort by score descending.
+
+4. Return — Slice the top k results.
+
+
+Potential Biases: The system provides higher biases to the genre and mood of the song. However, there are some music listeners who gives higher preference to an artist than the genre or mood of the song.
+
 ---
 
 ## Getting Started
@@ -209,3 +257,4 @@ A few sentences about what you learned:
 - How did building this change how you think about real music recommenders
 - Where do you think human judgment still matters, even if the model seems "smart"
 
+![alt text](image.png)
