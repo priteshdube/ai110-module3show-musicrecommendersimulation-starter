@@ -33,10 +33,12 @@ class UserProfile:
     likes_acoustic: bool
 
 # ------------------------------------------------------------
-# Taste profile: the target values the recommender scores
+# Taste profiles: the target values the recommender scores
 # each song against. Categorical fields are used as filters;
 # numerical fields drive the Gaussian proximity score.
 # ------------------------------------------------------------
+
+# Profile 1 — Chill Lofi
 USER_TASTE_PROFILE: Dict = {
     # --- categorical (used as filters) ---
     "favorite_genre": "lofi",       # primary genre anchor
@@ -51,6 +53,40 @@ USER_TASTE_PROFILE: Dict = {
 
     # --- tempo (raw BPM, normalized before scoring) ---
     "target_tempo_bpm":    80,      # slow to mid tempo
+}
+
+# Profile 2 — High-Energy Pop
+HIGH_ENERGY_POP_PROFILE: Dict = {
+    # --- categorical (used as filters) ---
+    "favorite_genre": "pop",        # mainstream pop anchor
+    "favorite_mood":  "energetic",  # upbeat, hype mood
+    "likes_acoustic": False,        # prefers produced/electronic sound
+
+    # --- numerical targets (all 0.0–1.0) ---
+    "target_energy":       0.90,    # very high energy
+    "target_valence":      0.85,    # bright and positive
+    "target_danceability": 0.90,    # highly danceable
+    "target_acousticness": 0.10,    # minimal acoustic, heavily produced
+
+    # --- tempo (raw BPM, normalized before scoring) ---
+    "target_tempo_bpm":    128,     # fast, club/dance tempo
+}
+
+# Profile 3 — Deep Intense Rock
+DEEP_INTENSE_ROCK_PROFILE: Dict = {
+    # --- categorical (used as filters) ---
+    "favorite_genre": "rock",       # rock/metal anchor
+    "favorite_mood":  "intense",    # dark and driving mood
+    "likes_acoustic": False,        # prefers electric/distorted sound
+
+    # --- numerical targets (all 0.0–1.0) ---
+    "target_energy":       0.88,    # high, aggressive energy
+    "target_valence":      0.25,    # dark and serious tone
+    "target_danceability": 0.35,    # not focused on danceability
+    "target_acousticness": 0.15,    # very little acoustic texture
+
+    # --- tempo (raw BPM, normalized before scoring) ---
+    "target_tempo_bpm":    145,     # fast and driving
 }
 
 class Recommender:
